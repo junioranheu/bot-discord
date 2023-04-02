@@ -8,9 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 var config = new ConfigurationBuilder().
-             AddJsonFile($"appsettings.json").
+             AddJsonFile("appsettings.json").
              AddEnvironmentVariables().
+             AddUserSecrets<Program>().
              Build();
+
+var appsettingsToken = config.GetSection("Settings:DiscordBotToken").Value ?? string.Empty;
+var secretPass = config["secretDiscordBotToken"]; // secrets.json;
+appsettingsToken = appsettingsToken.Replace("[secretDiscordBotToken]", secretPass);
 
 var commands = new CommandService(new CommandServiceConfig
 {
@@ -36,9 +41,9 @@ await Bootstrapper.RegisterInstance(commands, "commands");
 await Bootstrapper.RegisterInstance(config, "config");
 Bootstrapper.RegisterType<ICommandHandler, CommandHandler>();
 
-await MainAsync();
+await MainAsync(appsettingsToken);
 
-async Task MainAsync()
+async Task MainAsync(string token)
 {
     await Bootstrapper.ServiceProvider!.GetRequiredService<ICommandHandler>().InitializeAsync();
 
@@ -48,7 +53,6 @@ async Task MainAsync()
     };
 
     // Login and connect.
-    var token = config.GetRequiredSection("Settings")["DiscordBotToken"];
     if (string.IsNullOrWhiteSpace(token))
     {
         await Logger.Log(LogSeverity.Error, $"{nameof(Program)} | {nameof(MainAsync)}", "Token is null or empty.");
