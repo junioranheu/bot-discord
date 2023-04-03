@@ -26,17 +26,14 @@ namespace BotDiscord.Modules
                 return;
             }
 
-            foreach (var choice in chatGPTResponse!.Choices)
-            {
-                //await Context.Message.ReplyAsync(choice.Text);
-            }
+            await Context.Message.ReplyAsync(chatGPTResponse?.Choices![0].Text);
         }
 
         private static async Task<CompletionCreateResponse> ObterCompletionCreateResponse(string? texto)
         {
             OpenAIService gpt3 = new(new OpenAiOptions()
             {
-                ApiKey = apiKey
+                ApiKey = StaticKeys.ChatGPTApiKey
             });
 
             CompletionCreateResponse respChatGPT = await gpt3.Completions.CreateCompletion(new CompletionCreateRequest()

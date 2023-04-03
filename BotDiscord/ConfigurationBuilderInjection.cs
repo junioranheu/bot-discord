@@ -1,4 +1,5 @@
-﻿using BotDiscord.Init;
+﻿using BotDiscord.Common;
+using BotDiscord.Init;
 using BotDiscord.Models;
 using BotDiscord.Services;
 using Discord;
@@ -18,7 +19,7 @@ namespace BotDiscord
             AddCommands();
             AddConfig(config);
             string token = GetToken(config);
-
+            AddChatGPTApiKey(config);
             AddServices();
 
             return GetConfigurationBuilderInjectionResponse(token, client);
@@ -59,6 +60,12 @@ namespace BotDiscord
             string token = config["token"] ?? string.Empty; // secrets.json;
 
             return token;
+        }
+
+        private static void AddChatGPTApiKey(IConfigurationRoot config)
+        {
+            string chatGPTApiKey = config["gpt"] ?? string.Empty; // secrets.json;
+            StaticKeys.ChatGPTApiKey = chatGPTApiKey;
         }
 
         private static void AddServices()
