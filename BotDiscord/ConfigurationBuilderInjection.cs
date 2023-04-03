@@ -19,7 +19,7 @@ namespace BotDiscord
             AddConfig(config);
             string token = GetToken(config);
 
-            AddTypes();
+            AddServices();
 
             return GetConfigurationBuilderInjectionResponse(token, client);
         }
@@ -33,25 +33,25 @@ namespace BotDiscord
 
             DiscordSocketClient client = new(clientConfig);
 
-            Bootstrapper.RegisterInstance(client);
+            Bootstrapper.RegistrarInstancia(client);
 
             return client;
         }
 
         private static void AddCommands()
         {
-            CommandService commands = new(new CommandServiceConfig
+            Discord.Commands.CommandService commands = new(new CommandServiceConfig
             {
                 LogLevel = LogSeverity.Info,
                 CaseSensitiveCommands = false
             });
 
-            Bootstrapper.RegisterInstance(commands);
+            Bootstrapper.RegistrarInstancia(commands);
         }
 
         private static void AddConfig(IConfigurationRoot config)
         {
-            Bootstrapper.RegisterInstance(config);
+            Bootstrapper.RegistrarInstancia(config);
         }
 
         private static string GetToken(IConfigurationRoot config)
@@ -61,9 +61,9 @@ namespace BotDiscord
             return token;
         }
 
-        private static void AddTypes()
+        private static void AddServices()
         {
-            Bootstrapper.RegisterType<ICommandHandler, CommandHandler>();
+            Bootstrapper.RegistrarService<ICommandHandlerService, CommandHandlerService>();
         }
 
         private static ConfigurationBuilderInjectionResponse GetConfigurationBuilderInjectionResponse(string token, DiscordSocketClient client)

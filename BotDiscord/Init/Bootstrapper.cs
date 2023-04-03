@@ -21,7 +21,7 @@ namespace BotDiscord.Init
             }
         }
 
-        public static void RegisterType<TInterface, TImplementation>()
+        public static void RegistrarService<TInterface, TImplementation>()
             where TInterface : class
             where TImplementation : class, TInterface
         {
@@ -29,9 +29,9 @@ namespace BotDiscord.Init
             ServiceProvider = _serviceCollection?.BuildServiceProvider();
         }
 
-        public static void RegisterInstance<TInterface>(TInterface instance) where TInterface : class
+        public static void RegistrarInstancia<TInterface>(TInterface instancia) where TInterface : class
         {
-            _serviceCollection?.AddSingleton<TInterface>(instance);
+            _serviceCollection?.AddSingleton<TInterface>(instancia);
             ServiceProvider = _serviceCollection?.BuildServiceProvider();
         }
     }

@@ -18,7 +18,7 @@ ConfigurationBuilderInjectionResponse configInjection = ConfigurationBuilderInje
 
 if (string.IsNullOrEmpty(configInjection.Token) | configInjection.Client is null)
 {
-    await Logger.Log(LogSeverity.Info, "XXXXXXXXX", $"Token ou client estão vazios");
+    await Logger.Log(LogSeverity.Error, $"{nameof(Program)}", $"Token ou _client estão vazios ou inválidos");
     return;
 }
 
@@ -26,23 +26,15 @@ await Main(configInjection.Token!, configInjection.Client!);
 
 static async Task Main(string token, DiscordSocketClient client)
 {
-    await Bootstrapper.ServiceProvider!.GetRequiredService<ICommandHandler>().InitializeAsync();
+    await Bootstrapper.ServiceProvider!.GetRequiredService<ICommandHandlerService>().Initialize();
 
     client.Ready += async () =>
     {
-        await Logger.Log(LogSeverity.Info, "Ready", $"Number {Guid.NewGuid} is connected and ready!");
+        await Logger.Log(LogSeverity.Info, $"{nameof(Program)}", $"Bot está conectado e pronto para uso — {Guid.NewGuid()}");
     };
-
-    // Login and connect.
-    if (string.IsNullOrWhiteSpace(token))
-    {
-        await Logger.Log(LogSeverity.Error, $"{nameof(Program)} | {nameof(Main)}", "Token is null or empty.");
-        return;
-    }
 
     await client.LoginAsync(TokenType.Bot, token);
     await client.StartAsync();
 
-    // Wait infinitely so your bot actually stays connected.
     await Task.Delay(Timeout.Infinite);
 }
