@@ -1,0 +1,6 @@
+Discord dev
+https://discord.com/developers/applications/
+
+Tutoriais
+https://medium.com/medialesson/how-to-write-your-own-discord-bot-on-net-6-ac96e40467b8
+https://github.com/schroedermarius/GreetingsBot.NET

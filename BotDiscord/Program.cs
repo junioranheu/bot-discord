@@ -13,17 +13,11 @@ var config = new ConfigurationBuilder().
              AddUserSecrets<Program>().
              Build();
 
-var appsettingsToken = config.GetSection("Settings:DiscordBotToken").Value ?? string.Empty;
-var secretPass = config["secretDiscordBotToken"]; // secrets.json;
-appsettingsToken = appsettingsToken.Replace("[secretDiscordBotToken]", secretPass);
+string token = config["secretDiscordBotToken"] ?? string.Empty; // secrets.json;
 
 var commands = new CommandService(new CommandServiceConfig
 {
-    // Again, log level:
     LogLevel = LogSeverity.Info,
-
-    // There's a few more properties you can set,
-    // for example, case-insensitive commands.
     CaseSensitiveCommands = false
 });
 
@@ -36,14 +30,14 @@ var client = new DiscordSocketClient(clientConfig);
 
 // Setup your DI container.
 Bootstrapper.Init();
-await Bootstrapper.RegisterInstance(client, "client");
-await Bootstrapper.RegisterInstance(commands, "commands");
-await Bootstrapper.RegisterInstance(config, "config");
+Bootstrapper.RegisterInstance(client);
+Bootstrapper.RegisterInstance(commands);
+Bootstrapper.RegisterInstance(config);
 Bootstrapper.RegisterType<ICommandHandler, CommandHandler>();
 
-await MainAsync(appsettingsToken);
+await Main(token);
 
-async Task MainAsync(string token)
+async Task Main(string token)
 {
     await Bootstrapper.ServiceProvider!.GetRequiredService<ICommandHandler>().InitializeAsync();
 
@@ -55,7 +49,7 @@ async Task MainAsync(string token)
     // Login and connect.
     if (string.IsNullOrWhiteSpace(token))
     {
-        await Logger.Log(LogSeverity.Error, $"{nameof(Program)} | {nameof(MainAsync)}", "Token is null or empty.");
+        await Logger.Log(LogSeverity.Error, $"{nameof(Program)} | {nameof(Main)}", "Token is null or empty.");
         return;
     }
 

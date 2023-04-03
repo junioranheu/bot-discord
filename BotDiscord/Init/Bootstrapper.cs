@@ -1,6 +1,4 @@
-﻿using BotDiscord.Common;
-using Discord;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace BotDiscord.Init
 {
@@ -31,11 +29,10 @@ namespace BotDiscord.Init
             ServiceProvider = _serviceCollection?.BuildServiceProvider();
         }
 
-        public async static Task RegisterInstance<TInterface>(TInterface instance, string? nome) where TInterface : class
+        public static void RegisterInstance<TInterface>(TInterface instance) where TInterface : class
         {
             _serviceCollection?.AddSingleton<TInterface>(instance);
             ServiceProvider = _serviceCollection?.BuildServiceProvider();
-            await Logger.Log(LogSeverity.Info, $"{nameof(Bootstrapper)}", $"RegisterInstance {nome} instanced.");
         }
     }
 }
