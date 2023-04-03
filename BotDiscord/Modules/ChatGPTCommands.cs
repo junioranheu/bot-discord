@@ -26,7 +26,7 @@ namespace BotDiscord.Modules
                 return;
             }
 
-            await Context.Message.ReplyAsync(chatGPTResponse?.Choices![0].Text);
+            await Context.Message.ReplyAsync(text: chatGPTResponse?.Choices![0].Text);
         }
 
         private static async Task<CompletionCreateResponse> ObterCompletionCreateResponse(string? texto)
