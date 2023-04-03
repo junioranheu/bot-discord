@@ -3,7 +3,7 @@ using Discord.Commands;
 
 namespace BotDiscord.Modules
 {
-    public sealed class ChatCommands : ModuleBase<SocketCommandContext>
+    public sealed class RandomChatCommands : ModuleBase<SocketCommandContext>
     {
         [Command("ola", RunMode = RunMode.Async)]
         public async Task Ola()

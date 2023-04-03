@@ -40,7 +40,7 @@ namespace BotDiscord
 
         private static void AddCommands()
         {
-            Discord.Commands.CommandService commands = new(new CommandServiceConfig
+            CommandService commands = new(new CommandServiceConfig
             {
                 LogLevel = LogSeverity.Info,
                 CaseSensitiveCommands = false

@@ -29,6 +29,7 @@ namespace BotDiscord.Services
                 if (!result.IsSuccess && result.Error != CommandError.UnknownCommand)
                 {
                     await context.Channel.SendMessageAsync($"Erro no comando: {result}");
+                    await Logger.Log(LogSeverity.Error, $"{nameof(CommandHandlerService)} | Commands", $"{result}");
                 }
             };
 

@@ -29,7 +29,7 @@ namespace BotDiscord.Common
                     break;
             }
 
-            Console.WriteLine($"{Utils.HorarioBrasilia()} [{log.Severity}] {log.Source}: {log.Message} {log.Exception}");
+            Console.WriteLine($"{Utils.HorarioBrasilia()} [{log.Severity}] [{log.Source}] {log.Message} {log.Exception}");
             Console.ResetColor();
 
             return Task.CompletedTask;
