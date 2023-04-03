@@ -4,14 +4,14 @@ namespace BotDiscord.Common
 {
     public sealed class Logger
     {
-        public static async Task Log(LogSeverity severity, string source, string message, Exception? exception = null)
+        public static async Task Log(LogSeverity severidade, string fonte, string mensagem, Exception? excecao = null)
         {
-            await Log(new LogMessage(severity, source, message, exception));
+            await Log(new LogMessage(severidade, fonte, mensagem, excecao));
         }
 
-        private static Task Log(LogMessage message)
+        private static Task Log(LogMessage log)
         {
-            switch (message.Severity)
+            switch (log.Severity)
             {
                 case LogSeverity.Critical:
                 case LogSeverity.Error:
@@ -29,7 +29,7 @@ namespace BotDiscord.Common
                     break;
             }
 
-            Console.WriteLine($"{DateTime.Now,-19} [{message.Severity,8}] {message.Source}: {message.Message} {message.Exception}");
+            Console.WriteLine($"{DateTime.Now} [{log.Severity}] {log.Source}: {log.Message} {log.Exception}");
             Console.ResetColor();
 
             return Task.CompletedTask;
