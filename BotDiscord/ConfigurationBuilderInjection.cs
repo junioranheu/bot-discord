@@ -11,15 +11,15 @@ namespace BotDiscord
 {
     public class ConfigurationBuilderInjection
     {
-        public static ConfigurationBuilderInjectionResponse AddConfigurationBuilder(IConfigurationRoot config)
+        public static async Task<ConfigurationBuilderInjectionResponse> AddConfigurationBuilder(IConfigurationRoot config)
         {
             Bootstrapper.Init();
 
             DiscordSocketClient client = AddClient();
             AddCommands();
             AddConfig(config);
-            string token = GetToken(config);
-            AddChatGPTApiKey(config);
+            string token = await GetToken(config);
+            await AddChatGPTApiKey(config);
             AddServices();
 
             return GetConfigurationBuilderInjectionResponse(token, client);
@@ -55,17 +55,27 @@ namespace BotDiscord
             Bootstrapper.RegistrarInstancia(config);
         }
 
-        private static string GetToken(IConfigurationRoot config)
+        private static async Task<string> GetToken(IConfigurationRoot config)
         {
             string token = config["token"] ?? string.Empty; // secrets.json;
+
+            if (!string.IsNullOrEmpty(token))
+            {
+                await Logger.Log(LogSeverity.Info, $"{nameof(ConfigurationBuilderInjection)}", "Token do Discord em mãos");
+            }
 
             return token;
         }
 
-        private static void AddChatGPTApiKey(IConfigurationRoot config)
+        private static async Task AddChatGPTApiKey(IConfigurationRoot config)
         {
             string chatGPTApiKey = config["gpt"] ?? string.Empty; // secrets.json;
             StaticKeys.ChatGPTApiKey = chatGPTApiKey;
+
+            if (!string.IsNullOrEmpty(chatGPTApiKey))
+            {
+                await Logger.Log(LogSeverity.Info, $"{nameof(ConfigurationBuilderInjection)}", "Chave da API do ChatGPT em mãos");
+            }
         }
 
         private static void AddServices()

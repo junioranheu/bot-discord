@@ -14,7 +14,7 @@ var config = new ConfigurationBuilder().
              AddUserSecrets<Program>().
              Build();
 
-ConfigurationBuilderInjectionResponse configInjection = ConfigurationBuilderInjection.AddConfigurationBuilder(config);
+ConfigurationBuilderInjectionResponse configInjection = await ConfigurationBuilderInjection.AddConfigurationBuilder(config);
 
 if (string.IsNullOrEmpty(configInjection.Token) | configInjection.Client is null)
 {
