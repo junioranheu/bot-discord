@@ -1,8 +1,9 @@
-﻿using BotDiscord.Common;
+﻿using BotDiscord;
+using BotDiscord.Common;
 using BotDiscord.Init;
+using BotDiscord.Models;
 using BotDiscord.Services;
 using Discord;
-using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,31 +14,17 @@ var config = new ConfigurationBuilder().
              AddUserSecrets<Program>().
              Build();
 
-string token = config["secretDiscordBotToken"] ?? string.Empty; // secrets.json;
+ConfigurationBuilderInjectionResponse configInjection = ConfigurationBuilderInjection.AddConfigurationBuilder(config);
 
-var commands = new CommandService(new CommandServiceConfig
+if (string.IsNullOrEmpty(configInjection.Token) | configInjection.Client is null)
 {
-    LogLevel = LogSeverity.Info,
-    CaseSensitiveCommands = false
-});
+    await Logger.Log(LogSeverity.Info, "XXXXXXXXX", $"Token ou client estão vazios");
+    return;
+}
 
-var clientConfig = new DiscordSocketConfig()
-{
-    GatewayIntents = GatewayIntents.All | GatewayIntents.MessageContent
-};
+await Main(configInjection.Token!, configInjection.Client!);
 
-var client = new DiscordSocketClient(clientConfig);
-
-// Setup your DI container.
-Bootstrapper.Init();
-Bootstrapper.RegisterInstance(client);
-Bootstrapper.RegisterInstance(commands);
-Bootstrapper.RegisterInstance(config);
-Bootstrapper.RegisterType<ICommandHandler, CommandHandler>();
-
-await Main(token);
-
-async Task Main(string token)
+static async Task Main(string token, DiscordSocketClient client)
 {
     await Bootstrapper.ServiceProvider!.GetRequiredService<ICommandHandler>().InitializeAsync();
 
