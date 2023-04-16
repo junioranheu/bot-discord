@@ -1,12 +1,13 @@
-<h1 align="center">
-Botzinho do Discord
-</h1>
+# Botzinho do Discord
 
-<p align="center">Um bot do Discord que tem integração ao ChatGPT
-</p>
+Um bot do Discord que tem integração com a API do ChatGPT. Foi desenvolvido com .NET 7 e com uma arquitura clean.
+## Aprendizados
 
-## 📃 Sobre o projeto
+Primeiro bot de Discord desenvolvido. Experiência divertida. 🤠
+## Habilidades
+C#, .NET 7, Console App, ChatGPT
 
-Um bot do Discord que tem integração com a API do ChatGPT. Foi desenvolvido com .NET 7 e com uma arquitura bem clean! 
+## Variáveis de ambiente
 
-PS: Para utilizar o bot, é imprescindível que as propriedades "token" e "gpt" sejam devidamente preenchidas em User Secrets
+Para utilizar o bot, é imprescindível que as propriedades "token" e "gpt" sejam devidamente preenchidas em User Secrets.
+
