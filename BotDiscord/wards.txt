@@ -1,5 +1,8 @@
-Discord dev
+Discord token
 https://discord.com/developers/applications/
+
+ChatGPT token
+https://platform.openai.com/api-keys
 
 Tutoriais
 https://medium.com/medialesson/how-to-write-your-own-discord-bot-on-net-6-ac96e40467b8
