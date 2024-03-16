@@ -1,5 +1,5 @@
 Discord token
-https://discord.com/developers/applications/
+https://discord.com/developers/applications/1091917471109361664/bot
 
 ChatGPT token
 https://platform.openai.com/api-keys
