@@ -1,5 +1,5 @@
-﻿using OpenAI.GPT3.ObjectModels.ResponseModels;
-using OpenAI.GPT3.ObjectModels.SharedModels;
+﻿using OpenAI.ObjectModels.ResponseModels;
+using OpenAI.ObjectModels.SharedModels;
 
 namespace BotDiscord.Models
 {

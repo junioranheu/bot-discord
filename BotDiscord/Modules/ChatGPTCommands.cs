@@ -2,10 +2,10 @@
 using BotDiscord.Models;
 using Discord;
 using Discord.Commands;
-using OpenAI.GPT3;
-using OpenAI.GPT3.Managers;
-using OpenAI.GPT3.ObjectModels.RequestModels;
-using OpenAI.GPT3.ObjectModels.ResponseModels;
+using OpenAI;
+using OpenAI.Managers;
+using OpenAI.ObjectModels.RequestModels;
+using OpenAI.ObjectModels.ResponseModels;
 
 namespace BotDiscord.Modules
 {
@@ -21,7 +21,7 @@ namespace BotDiscord.Modules
             {
                 await Logger.Log(LogSeverity.Critical, $"{nameof(ChatGPTCommands)}", chatGPTResponse?.Error?.Message ?? string.Empty);
 
-                string erro = !string.IsNullOrEmpty(chatGPTResponse?.Error?.Message) ? $": {chatGPTResponse.Error.Message}" : string.Empty;
+                string erro = !string.IsNullOrEmpty(chatGPTResponse?.Error?.Message) ? $": {chatGPTResponse?.Error?.Message}" : string.Empty;
                 await Context.Message.ReplyAsync($"Ops, {Context.User.Username}! Parece que houve um erro{erro}");
                 return;
             }
@@ -39,9 +39,9 @@ namespace BotDiscord.Modules
             CompletionCreateResponse respChatGPT = await gpt3.Completions.CreateCompletion(new CompletionCreateRequest()
             {
                 Prompt = texto ?? string.Empty,
-                Model = OpenAI.GPT3.ObjectModels.Models.TextDavinciV2,
+                Model = OpenAI.ObjectModels.Models.Gpt_3_5_Turbo,
                 Temperature = 0.5F,
-                MaxTokens = 100,
+                MaxTokens = 2,
                 N = 1
             });
 
