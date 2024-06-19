@@ -4,6 +4,8 @@ https://discord.com/developers/applications/1091917471109361664/bot
 ChatGPT token
 https://platform.openai.com/api-keys
 
-Tutoriais
-https://medium.com/medialesson/how-to-write-your-own-discord-bot-on-net-6-ac96e40467b8
-https://github.com/schroedermarius/GreetingsBot.NET
+Preencher o secrets.json:
+{
+    "discord": "xxx",
+    "chatgpt": "xxx"
+}

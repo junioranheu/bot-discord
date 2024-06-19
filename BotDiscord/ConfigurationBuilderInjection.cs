@@ -57,7 +57,7 @@ namespace BotDiscord
 
         private static async Task<string> GetToken(IConfigurationRoot config)
         {
-            string token = config["token"] ?? string.Empty; // secrets.json;
+            string token = config["discord"] ?? string.Empty; // secrets.json;
 
             if (!string.IsNullOrEmpty(token))
             {
@@ -69,7 +69,7 @@ namespace BotDiscord
 
         private static async Task AddChatGPTApiKey(IConfigurationRoot config)
         {
-            string chatGPTApiKey = config["gpt"] ?? string.Empty; // secrets.json;
+            string chatGPTApiKey = config["chatgpt"] ?? string.Empty; // secrets.json;
             StaticKeys.ChatGPTApiKey = chatGPTApiKey;
 
             if (!string.IsNullOrEmpty(chatGPTApiKey))

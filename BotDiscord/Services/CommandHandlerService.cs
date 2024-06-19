@@ -1,9 +1,9 @@
-﻿using BotDiscord.Common;
+﻿using System.Reflection;
+using BotDiscord.Common;
 using BotDiscord.Init;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
-using System.Reflection;
 
 namespace BotDiscord.Services
 {
@@ -54,7 +54,7 @@ namespace BotDiscord.Services
             SocketCommandContext context = new(_client, msg);
 
             int markPos = 0;
-            if (msg.HasCharPrefix('!', ref markPos))
+            if (msg.HasCharPrefix(StaticKeys.CharPrefix, ref markPos))
             {
                 await _commands.ExecuteAsync(context, markPos, Bootstrapper.ServiceProvider);
             }
